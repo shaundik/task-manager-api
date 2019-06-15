@@ -8,7 +8,7 @@ const {sendWelcomeEmail, sendCancelEmail} = require('../emails/account')
 const router = new express.Router()
 //REST API endpoints creation
 router.post('/users', async (req,res) => {     
-                 
+
     const user = new User(req.body)        //req.body is the object form of json data sent in request
 
     try{
@@ -95,7 +95,7 @@ router.patch('/users/me', auth, async(req,res) => {
 router.delete('/users/me', auth, async(req, res) => {
 
     try {
-        req.user.remove() 
+        await req.user.remove() 
         sendCancelEmail(req.user.email, req.user.name)
         res.send(req.user)
 
