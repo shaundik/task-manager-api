@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Task-Manager</title>
+    </head>
+    <body>
+        <p id="check"></p>
+        <h1>Create Task</h1>
+        <form id="newtask-form">
+            <input id="task-name" type="text" placeholder="Task Name" value="{{val}}" required>
+            <input id="task-status" list="browsers" placeholder="Task Status">
+                <datalist id="browsers">
+                    <option value="To Do">
+                    <option value="Completed">
+                </datalist>
+            <button id="task-submit-button" type="submit" value={{buttonVal}}>{{buttonName}}</button>
+        </form>
+
+        <script src="/js/task_client.js"></script>
+    </body>
+</html>
+
+
+

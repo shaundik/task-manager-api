@@ -1,15 +1,49 @@
 const express = require('express')
 const Task = require('../models/task')
 const auth = require('../middleware/auth')
+const path = require('path')
+const app = require('../app')
 
 const router = new express.Router()
 //REST API endpoint creation
+router.get('/createtaskform',(req, res) => {
+    //console.log(req.query)
+    if(req.query.update){
+        res.render('createtaskform', {
+            val:req.query.update,
+            buttonName:'Update Task',
+            buttonVal: req.query.id
+        })
+    }else{
+        res.render('createtaskform',{
+            buttonName:'Add New Task',
+            buttonVal:'add'
+        })
+    }
+    
+})
+router.get('/createtask',auth, async(req,res) => {
+    res.send()
+})
+
+router.get('/taskDetails', (req,res) => {
+    //console.log(req.query)
+    res.render('taskdetail',{
+        task:req.query.task,
+        status:req.query.status,
+        createdAt:req.query.createdAt,
+        updatedAt:req.query.updatedAt
+    })
+})
+
+
 router.post('/tasks', auth, async(req,res) => {
     //const task = new Task(req.body)
     const task = new Task({
         ...req.body,
         owner: req.user._id
     })
+    //console.log(req.body)
     try {
         await task.save()
         res.status(201).send(task)
@@ -100,6 +134,7 @@ router.patch('/tasks/:id', auth, async(req,res) => {
 })
 
 router.delete('/tasks/:id', auth, async(req, res) => {
+    //console.log('naman')
     try {
         const task = await Task.findOneAndDelete({_id:req.params.id, owner:req.user._id})
 

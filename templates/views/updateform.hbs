@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Task-Manager</title>
+    </head>
+    <body>
+        <h1>UPDATE</h1>
+        
+        <p id="info" style="color: red"></p>
+
+        <form id="update-form">
+            <input id="up-name" type="text" placeholder="name" name="name" value="{{name}}" required>
+            <input id="up-email" type="email" placeholder="email" name="email" value="{{email}}" required>
+            <input id="up-password" type="text" placeholder="password" name="password" >
+            <input id="up-age" type="number" placeholder="age" name="age" value="{{age}}">
+            <button type="submit">Update</button>
+        </form>
+
+        <button onclick="homepage()">Home</button>
+        <script>
+            function homepage() {
+                location.href = '/profile'
+            }   
+        </script>
+
+        <script src="/js/update_user.js"></script>
+    </body>
+</html>

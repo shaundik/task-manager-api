@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Task-Manager</title>
+    </head>
+    <body>
+        <h1>SIGN UP</h1>
+        <div id="profile"></div>
+        <p id="msg1" style="color: red">{{info}}</p>
+        <form id="signup-form" action="profile.hbs">
+            <input id="signup-name" type="text" placeholder="name" name="name"><br><br>
+            <input id="signup-email" type="email" placeholder="email" name="email"><br><br>
+            <input id="signup-password" type="text" placeholder="password" name="password"><br><br>
+            <input id="signup-age" type="number" placeholder="age" name="age"><br><br>
+            <button type="submit">sign up</button>
+        </form>
+        <br>
+        <a href="login">click here to login</a>
+
+        <script src="/js/signup.js"></script>
+    </body>
+</html>

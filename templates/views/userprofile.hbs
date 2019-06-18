@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Task-Manager</title>
+    </head>
+    <body>
+        <h1 style="color: red">My Profile</h1>
+        <hr>
+        <h2>Name     :- {{name}}</h2>
+        <h2>Email-Id :- {{email}}</h2>
+        <h2>age      :- {{age}}</h2>
+
+        <button onclick="updatepage('{{name}}','{{email}}','{{age}}')">Update</button>
+        <button id="delete-user">Delete Account</button>
+        <button onclick="homepage()">Home</button>
+        <script>
+            function homepage() {
+                location.href = '/profile'
+            }   
+        </script>
+
+        <script>
+             function updatepage(name,email,age) {
+                location.href = '/users/updateform?name='+name+'&email='+email+'&age='+age
+            }
+        </script>
+
+        <script src="/js/delete_user.js"></script>
+
+    </body>
+</html>

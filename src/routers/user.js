@@ -2,21 +2,90 @@ const express = require('express')
 const multer = require('multer')
 const User = require('../models/user')
 const auth = require('../middleware/auth')
+const app = require('../app')
 const sharp = require('sharp')
 const {sendWelcomeEmail, sendCancelEmail} = require('../emails/account')
 
 const router = new express.Router()
+
+router.get('', (req,res) => {
+    if(req.query.alert){
+        res.render('form',{
+            info:'your account was deleted'
+        })
+    }
+    else{
+        res.render('form')
+    }
+})
+
+router.get('/login', (req,res) => {
+    res.render('login')
+})
+
+router.get('/profile', (req,res) => {
+    if(req.query.alert === 'updated'){
+        res.render('profile',{info: 'User Data Updated Successfully'})
+    }
+    else if(req.query.alert === 'taskUpdated'){
+        res.render('profile',{info: 'One task updated'})
+    }
+    else if(req.query.alert === 'taskAdded'){
+        res.render('profile',{info: 'New task added'})
+    }
+    else if(req.query.alert==='login'){
+        res.render('profile',{
+            name:req.query.name
+        })
+    }
+    else{
+      res.render('profile')
+    }
+})
+
+router.get('/logout', (req,res) => {
+    //console.log(req.query)
+    if(req.query.all){
+        res.render('logout',{
+            ofAll: 'From your all sessions'
+        })
+    }else{
+        res.render('logout')
+    }
+})
+
+router.get('/users/profile',(req, res) => {
+    res.render('userprofile',{
+        name : req.query.name,
+        email: req.query.email,
+        age: req.query.age
+    })
+})
+
+router.get('/users/updateform', (req,res) => {
+    //console.log(req.query)
+    res.render('updateform',{
+        name: req.query.name,
+        email: req.query.email,
+        age: req.query.age
+    })
+})
+
 //REST API endpoints creation
 router.post('/users', async (req,res) => {     
 
+    // console.log('naman')
+    // console.log(req.body)
     const user = new User(req.body)        //req.body is the object form of json data sent in request
 
     try{
+        //console.log('shaundik')
         await user.save()
-        sendWelcomeEmail(user.email, user.name)
+        //sendWelcomeEmail(user.email, user.name)
         const token = await user.generateAuthToken()
         res.status(201).send({user,token})
     }catch (e) {
+        //console.log('kumar')
         res.status(400).send(e)
     }
 
@@ -26,8 +95,11 @@ router.post('/users/login', async (req, res) => {
     try {
         const user  = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
-        
-        res.send({ user,token})
+        res.status(200).send({ user,token})
+        // res.render('profile',{
+        //     name:user.name,
+        //     email:user.email
+        // })
     } catch (e) {
         res.status(400).send(e)
     }
@@ -39,8 +111,8 @@ router.post('/users/logout', auth, async (req,res) => {
             return token.token !== req.token
         })
         await req.user.save()
-
-        res.send()
+        //console.log('naman')
+        res.send('sucessfilly logged out')
     } catch (e) {
         res.status(500).send()
     }
@@ -96,7 +168,7 @@ router.delete('/users/me', auth, async(req, res) => {
 
     try {
         await req.user.remove() 
-        sendCancelEmail(req.user.email, req.user.name)
+        //sendCancelEmail(req.user.email, req.user.name)
         res.send(req.user)
 
     } catch (e) {
