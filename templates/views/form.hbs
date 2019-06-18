@@ -7,10 +7,11 @@
         <h1>SIGN UP</h1>
         <div id="profile"></div>
         <p id="msg1" style="color: red">{{info}}</p>
+        <p id="signupinfo" style="color: blue"></p>
         <form id="signup-form" action="profile.hbs">
-            <input id="signup-name" type="text" placeholder="name" name="name"><br><br>
-            <input id="signup-email" type="email" placeholder="email" name="email"><br><br>
-            <input id="signup-password" type="text" placeholder="password" name="password"><br><br>
+            <input id="signup-name" type="text" placeholder="name" name="name" required><br><br>
+            <input id="signup-email" type="email" placeholder="email" name="email" required><br><br>
+            <input id="signup-password" type="password" placeholder="password" name="password" required><br><br>
             <input id="signup-age" type="number" placeholder="age" name="age"><br><br>
             <button type="submit">sign up</button>
         </form>

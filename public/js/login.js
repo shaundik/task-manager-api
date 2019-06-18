@@ -24,27 +24,10 @@ loginForm.addEventListener('submit',(e) => {
         return res.json()
     })
     .then((data) => {
-        console.log(data)
         localStorage.setItem('loginToken', data.token.toString())
         if(data.token){
             location.href = '/profile?alert=login&name='+data.user.name
         }
     })
-    .catch((e) => {
-        console.log(e)
-    })
+    .catch((e) => { })
 })
-
-// .then((res) => {
-//     res.json().then((data) => {
-//         if(!data){
-//             return console.log('no object returned')
-//         }
-//         console.log(data)
-//         console.log(data.token.toString())
-//         localStorage.setItem('loginToken', data.token.toString())
-//         if(data.token){
-//             location.href = '/profile'
-//         }
-//     })
-// })

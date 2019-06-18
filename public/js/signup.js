@@ -5,8 +5,8 @@ const signupFormPassword = document.querySelector('#signup-password')
 const signupFormAge = document.querySelector('#signup-age')
 
 
-const msg = document.querySelector('#msg1')
-//msg.textContent = 'mafarsdf'
+const msg = document.querySelector('#signupinfo')
+msg.textContent = 'Password must be 8 charracters long'
 
 signupForm.addEventListener('submit',(e) => {
     e.preventDefault()
@@ -27,18 +27,15 @@ signupForm.addEventListener('submit',(e) => {
             age
         })
     }).then((res) => {
-        res.json().then((data) => {
-            if(!data){
-                return console.log('no object returned')
-            }
-            console.log(data)
-            console.log(data.token.toString())
-            localStorage.setItem('loginToken',data.token.toString())
-            if(data.token){
-                location.href = '/profile?alert=login&name='+data.user.name
-            }
-        })
-    }).catch((e) => {
-        console.log(e)
+        if(res.status === 400){
+            return msg.textContent = 'Password is too small, please try again'
+        }
+        return res.json()
+    }).then((data) => {
+        localStorage.setItem('loginToken',data.token.toString())
+        if(data.token){
+            location.href = '/profile?alert=login&name='+data.user.name
+        }
     })
+    .catch((e) => { })
 })
