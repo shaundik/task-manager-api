@@ -1,7 +1,5 @@
 const Token = localStorage.getItem('loginToken')
 
-document.getElementById('check').textContent='Checkin successful'
-
 const taskForm = document.querySelector('#newtask-form')
 const taskDescription = document.querySelector('#task-name')
 const taskStatus = document.querySelector('#task-status')
